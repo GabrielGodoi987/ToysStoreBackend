@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=toysdb'
+      - 'POSTGRES_PASSWORD=docker'
+      - 'POSTGRES_USER=root'
+    volumes:
+      - .docker/dbdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
