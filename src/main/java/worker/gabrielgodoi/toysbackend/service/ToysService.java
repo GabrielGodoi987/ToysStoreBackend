@@ -25,6 +25,10 @@ public class ToysService {
         return this.toysRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Toy not found"));
     }
 
+    public List<Toys> findByCategory(Long categoryId){
+        return this.toysRepository.findByCategoryId(categoryId);
+    }
+
     public Toys update(Long id, Toys updateToy){
         try{
             Toys toy = this.toysRepository.getReferenceById(id);

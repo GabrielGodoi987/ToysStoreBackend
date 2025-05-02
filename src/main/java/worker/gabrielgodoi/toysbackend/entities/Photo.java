@@ -19,6 +19,7 @@ public class Photo {
     private Long id;
     private String path;
 
+    @JsonIgnore
     @JoinColumn(name = "toy_id", nullable = false)
     @ManyToOne
     private Toys toyId;

@@ -1,4 +1,24 @@
 services:
+  app:
+    build: .
+    container_name: toys-app
+    volumes:
+      - .:/app
+    ports:
+      - "8082:8082"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5433/toysdb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=docker
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - toys_network
+    depends_on:
+      - postgres
+
+
   postgres:
     image: 'postgres:latest'
     environment:
@@ -7,5 +27,11 @@ services:
       - 'POSTGRES_USER=root'
     volumes:
       - .docker/dbdata:/var/lib/postgresql/data
+    networks:
+      - toys_network
     ports:
-      - '5432:5432'
+      - '5433:5433'
+
+networks:
+  toys_network:
+    driver: bridge
