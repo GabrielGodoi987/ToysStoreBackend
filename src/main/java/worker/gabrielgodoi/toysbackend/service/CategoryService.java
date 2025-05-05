@@ -3,6 +3,7 @@ package worker.gabrielgodoi.toysbackend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import worker.gabrielgodoi.toysbackend.entities.Category;
+import worker.gabrielgodoi.toysbackend.erros.EntityCouldNotBeDeleted;
 import worker.gabrielgodoi.toysbackend.erros.EntityNotFoundException;
 import worker.gabrielgodoi.toysbackend.repository.CategoryRepository;
 
@@ -32,6 +33,13 @@ public class CategoryService {
     }
 
     public void delete(Long id) {
+        Category cat = this.findOne(id);
+        if (cat == null){
+            throw new EntityNotFoundException("Category: " + id + " doesn't exists");
+        }
+        if (!cat.getToysList().isEmpty()){
+            throw new EntityCouldNotBeDeleted("Category: " + id + " could not be deleted, because there're toys related to her");
+        }
         this.categoryRepository.deleteById(id);
     }
 
