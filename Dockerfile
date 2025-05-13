@@ -4,8 +4,6 @@ RUN apt-get update && apt-get install -y
 
 RUN apt-get install -y maven
 
-LABEL authors="gabrielgodoi"
-
 WORKDIR /app
 
 COPY . .

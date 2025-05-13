@@ -1,17 +1,17 @@
 package worker.gabrielgodoi.toysbackend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import worker.gabrielgodoi.toysbackend.dto.category.InsertCategoryDto;
 import worker.gabrielgodoi.toysbackend.entities.Category;
 import worker.gabrielgodoi.toysbackend.service.CategoryService;
 
 import java.net.URI;
 import java.util.List;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@CrossOrigin(origins = "http://localhost:9000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/categories")
@@ -31,9 +31,9 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> create(@RequestBody Category category) {
+    public ResponseEntity<Category> create(@RequestBody InsertCategoryDto category) {
         Category cat = this.categoryService.create(category);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(category.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(cat.getId()).toUri();
         return ResponseEntity.created(uri).body(cat);
     }
 

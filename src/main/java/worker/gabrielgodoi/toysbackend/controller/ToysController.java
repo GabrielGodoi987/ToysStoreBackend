@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import worker.gabrielgodoi.toysbackend.dto.toys.InsertToyDto;
+import worker.gabrielgodoi.toysbackend.dto.toys.ToyDto;
 import worker.gabrielgodoi.toysbackend.entities.Toys;
 import worker.gabrielgodoi.toysbackend.service.ToysService;
 
@@ -18,8 +20,8 @@ public class ToysController {
     private final ToysService toysService;
 
     @GetMapping
-    public ResponseEntity<List<Toys>> findAll() {
-        List<Toys> toysList = this.toysService.findAll();
+    public ResponseEntity<List<ToyDto>> findAll() {
+        List<ToyDto> toysList = this.toysService.findAll();
         return ResponseEntity.ok().body(toysList);
     }
 
@@ -33,10 +35,10 @@ public class ToysController {
         List<Toys> toysList = this.toysService.findByCategory(categoryId);
         return ResponseEntity.ok().body(toysList);
     }
-    @PostMapping
-    public ResponseEntity<Toys> create(@RequestBody Toys insertToy) {
-        Toys toys = this.toysService.create(insertToy);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(insertToy.getId()).toUri();
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<ToyDto> create(InsertToyDto insertToy) {
+        ToyDto toys = this.toysService.create(insertToy);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(toys.getId()).toUri();
         return ResponseEntity.created(uri).body(toys);
     }
 

@@ -13,10 +13,11 @@ import java.util.List;
 @EqualsAndHashCode
 public class InsertToyDto {
     private String name;
+    private Double price;
     private String description;
     private String shortDescription;
     private Long categoryId;
-
+    private List<String> specifications = new ArrayList<>();
     @Getter
     private List<MultipartFile> photos = new ArrayList<>();
 }
