@@ -29,6 +29,7 @@ public class ToyDto implements Serializable {
         setPrice(entity.getPrice());
         setDescription(entity.getDescription());
         setShortDescription(entity.getShortDescription());
+        setCategoryId(entity.getCategoryId());
         entity.getSpecifications().forEach(e -> getSpecifications().add(e));
         entity.getPhotos().forEach(e -> getPhotos().add(e.getPath()));
     }

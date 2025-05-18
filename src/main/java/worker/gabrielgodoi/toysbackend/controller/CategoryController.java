@@ -11,7 +11,7 @@ import worker.gabrielgodoi.toysbackend.service.CategoryService;
 import java.net.URI;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:9000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/categories")
@@ -30,15 +30,15 @@ public class CategoryController {
         return ResponseEntity.ok().body(category);
     }
 
-    @PostMapping
-    public ResponseEntity<Category> create(@RequestBody InsertCategoryDto category) {
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<Category> create(InsertCategoryDto category) {
         Category cat = this.categoryService.create(category);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(cat.getId()).toUri();
         return ResponseEntity.created(uri).body(cat);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable("id") Long id, @RequestBody Category category) {
+    @PutMapping(value = "/{id}", consumes = "multipart/form-data")
+    public ResponseEntity<Category> updateCategory(@PathVariable("id") Long id, Category category) {
         Category cat = this.categoryService.update(id, category);
         return ResponseEntity.ok().body(cat);
     }

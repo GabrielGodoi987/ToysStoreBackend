@@ -3,10 +3,13 @@ spring:
     name: ToyBackend
   profiles:
     active: test
+
 server:
   port: 8082
+
 file:
   uploadDir: uploads
+
 springdoc:
   swagger-ui:
     path: /swagger-doc

@@ -42,8 +42,8 @@ public class ToysController {
         return ResponseEntity.created(uri).body(toys);
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Toys> update(@PathVariable Long id, @RequestBody Toys updateToy) {
+    @PutMapping(value = "/{id}", consumes = "multipart/form-data")
+    public ResponseEntity<Toys> update(@PathVariable Long id, Toys updateToy) {
         Toys toy = this.toysService.update(id, updateToy);
         return ResponseEntity.ok().body(toy);
     }

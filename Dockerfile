@@ -16,5 +16,10 @@ ARG JAR_FILE=target/*.jar
 
 COPY ${JAR_FILE} /app.jar
 
+COPY entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 8082
+
+ENTRYPOINT ["/entrypoint.sh"]
