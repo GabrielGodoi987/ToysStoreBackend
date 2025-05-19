@@ -2,7 +2,7 @@ spring:
   application:
     name: ToyBackend
   profiles:
-    active: test
+    active: production
 
 server:
   port: 8082
