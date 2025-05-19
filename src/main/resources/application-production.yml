@@ -1,2 +1,25 @@
 ## conexão com banco de dados real
 ## banco de dados postgres
+spring:
+  datasource:
+    url: jdbc:postgresql://${HOST}:${PORT}/${DATABASE_NAME}?sslmode=require
+    username: ${USERNAME}
+    password: ${PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      idle-timeout: 30000
+      max-lifetime: 60000
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
