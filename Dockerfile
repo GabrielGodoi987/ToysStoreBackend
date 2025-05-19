@@ -1,25 +1,17 @@
 FROM openjdk:21-jdk-slim
 
-RUN apt-get update && apt-get install -y
-
-RUN apt-get install -y maven
+RUN apt-get update && apt-get install -y maven
 
 WORKDIR /app
 
-COPY . .
+COPY pom.xml .
+COPY src ./src
 
-RUN mvn clean
-
-RUN mvn package
+RUN mvn clean package
 
 ARG JAR_FILE=target/*.jar
-
-COPY ${JAR_FILE} /app.jar
-
-COPY entrypoint.sh /entrypoint.sh
-
-RUN chmod +x /entrypoint.sh
+RUN cp ${JAR_FILE} app.jar
 
 EXPOSE 8082
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["java","-jar","app.jar"]
