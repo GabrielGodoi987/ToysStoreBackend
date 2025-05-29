@@ -21,6 +21,9 @@ public class Instantiation implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        this.toysRepository.deleteAll();
+        this.categoryRepository.deleteAll();
+
         Category c1 = new Category(null, "", "carrinhos");
         Toys t1 = new Toys(null, "carrinho de controle remoto", 2.99, "carrinho de cria", "carrinho pros cria sorri", List.of("1", "2", "3"), c1);
 
