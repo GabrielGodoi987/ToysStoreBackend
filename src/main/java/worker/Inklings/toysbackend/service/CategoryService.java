@@ -3,6 +3,7 @@ package worker.Inklings.toysbackend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import worker.Inklings.toysbackend.dto.category.InsertCategoryDto;
+import worker.Inklings.toysbackend.dto.category.UpdateCategoryDto;
 import worker.Inklings.toysbackend.entities.Category;
 import worker.Inklings.toysbackend.erros.EntityCouldNotBeDeleted;
 import worker.Inklings.toysbackend.erros.EntityNotFoundException;
@@ -32,7 +33,7 @@ public class CategoryService {
         return this.categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Category not found"));
     }
 
-    public Category update(Long id, InsertCategoryDto updateCategory) {
+    public Category update(Long id, UpdateCategoryDto updateCategory) {
         Category category = this.categoryRepository.getReferenceById(id);
         category.setName(updateCategory.getName());
         return this.categoryRepository.save(category);
@@ -47,14 +48,6 @@ public class CategoryService {
             throw new EntityCouldNotBeDeleted("Category: " + id + " could not be deleted, because there're toys related to her");
         }
         this.categoryRepository.deleteById(id);
-    }
-
-    public void deleteMany(List<Long> id) {
-        this.categoryRepository.deleteAllById(id);
-    }
-
-    public void updateData(Category entity, Category category) {
-        entity.setName(category.getName());
     }
 
     public void entityToDto(Category entity, InsertCategoryDto dto) {

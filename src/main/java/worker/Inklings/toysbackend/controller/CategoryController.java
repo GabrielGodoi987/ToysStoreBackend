@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import worker.Inklings.toysbackend.dto.category.InsertCategoryDto;
+import worker.Inklings.toysbackend.dto.category.UpdateCategoryDto;
 import worker.Inklings.toysbackend.entities.Category;
 import worker.Inklings.toysbackend.service.CategoryService;
 
@@ -38,7 +39,7 @@ public class CategoryController {
     }
 
     @PutMapping(value = "/{id}", consumes = "multipart/form-data")
-    public ResponseEntity<Category> updateCategory(@PathVariable("id") Long id, InsertCategoryDto category) {
+    public ResponseEntity<Category> updateCategory(@PathVariable("id") Long id, UpdateCategoryDto category) {
         Category cat = this.categoryService.update(id, category);
         return ResponseEntity.ok().body(cat);
     }
