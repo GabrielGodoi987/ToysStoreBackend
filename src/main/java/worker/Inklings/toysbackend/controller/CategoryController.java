@@ -38,7 +38,7 @@ public class CategoryController {
         return ResponseEntity.created(uri).body(cat);
     }
 
-    @PutMapping(value = "/{id}", consumes = "multipart/form-data")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable("id") Long id, UpdateCategoryDto category) {
         Category cat = this.categoryService.update(id, category);
         return ResponseEntity.ok().body(cat);
