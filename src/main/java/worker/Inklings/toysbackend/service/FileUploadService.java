@@ -8,6 +8,7 @@ import worker.Inklings.toysbackend.config.FileStorageProperties;
 import worker.Inklings.toysbackend.erros.BadFormatException;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -18,6 +19,11 @@ public class FileUploadService {
 
     public FileUploadService(FileStorageProperties fileStorageProperties) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir()).toAbsolutePath().normalize();
+        try {
+            Files.createDirectories(this.fileStorageLocation);
+        } catch (IOException ex) {
+            throw new RuntimeException("Could not create the directory where the uploaded files will be stored.", ex);
+        }
     }
 
     public String uploadImage(MultipartFile file) {
