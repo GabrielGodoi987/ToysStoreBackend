@@ -33,17 +33,20 @@ public class CategoryService {
     }
 
     public Category update(Long id, Category updateCategory) {
-        Category category = this.categoryRepository.getReferenceById(id);
-        this.updateData(category, updateCategory);
+        Category category = this.categoryRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Category: " + id + " not found")
+        );
+        Category category1 = new Category();
+        this.updateData(category1, updateCategory);
         return this.categoryRepository.save(category);
     }
 
     public void delete(Long id) {
         Category cat = this.findOne(id);
-        if (cat == null){
+        if (cat == null) {
             throw new EntityNotFoundException("Category: " + id + " doesn't exists");
         }
-        if (!cat.getToysList().isEmpty()){
+        if (!cat.getToysList().isEmpty()) {
             throw new EntityCouldNotBeDeleted("Category: " + id + " could not be deleted, because there're toys related to her");
         }
         this.categoryRepository.deleteById(id);
@@ -57,7 +60,7 @@ public class CategoryService {
         entity.setName(category.getName());
     }
 
-    public void entityToDto(Category entity, InsertCategoryDto dto){
+    public void entityToDto(Category entity, InsertCategoryDto dto) {
         entity.setName(dto.getName());
     }
 }
