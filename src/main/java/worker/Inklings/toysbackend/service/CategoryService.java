@@ -32,12 +32,9 @@ public class CategoryService {
         return this.categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Category not found"));
     }
 
-    public Category update(Long id, Category updateCategory) {
-        Category category = this.categoryRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Category: " + id + " not found")
-        );
-        Category category1 = new Category();
-        this.updateData(category1, updateCategory);
+    public Category update(Long id, InsertCategoryDto updateCategory) {
+        Category category = this.categoryRepository.getReferenceById(id);
+        category.setName(updateCategory.getName());
         return this.categoryRepository.save(category);
     }
 
