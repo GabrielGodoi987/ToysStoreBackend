@@ -13,6 +13,7 @@ import worker.Inklings.toysbackend.repository.CategoryRepository;
 import worker.Inklings.toysbackend.repository.PhotoRepository;
 import worker.Inklings.toysbackend.repository.ToysRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,10 +33,11 @@ public class ToysService {
     public ToyDto create(InsertToyDto toyDto) {
         Toys toys = new Toys();
         this.entityToDto(toys, toyDto);
-        Category category = this.categoryRepository.findById(toyDto.getCategoryId()).orElseThrow(() -> new EntityNotFoundException("Category not found"));
-        toys.setCategoryId(category);
 
-        toys = this.toysRepository.save(toys);
+        Category category = this.categoryRepository.findById(toyDto.getCategoryId())
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+        toys.setCategoryId(category);
+        this.toysRepository.save(toys);
 
         for (MultipartFile multipartFile : toyDto.getPhotos()) {
             String path = this.fileUploadService.uploadImage(multipartFile);
@@ -46,6 +48,7 @@ public class ToysService {
 
         return new ToyDto(toys);
     }
+
 
     public Toys findOne(Long id) {
         return this.toysRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Toy not found"));
