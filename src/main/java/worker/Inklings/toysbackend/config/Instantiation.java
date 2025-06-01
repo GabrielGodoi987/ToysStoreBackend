@@ -9,11 +9,13 @@ import worker.Inklings.toysbackend.entities.Toys;
 import worker.Inklings.toysbackend.repository.CategoryRepository;
 import worker.Inklings.toysbackend.repository.PhotoRepository;
 import worker.Inklings.toysbackend.repository.ToysRepository;
+
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Configuration
-@Profile("production")
+@Profile("develop")
 public class Instantiation implements CommandLineRunner {
     private final ToysRepository toysRepository;
     private final CategoryRepository categoryRepository;
@@ -24,10 +26,25 @@ public class Instantiation implements CommandLineRunner {
         this.toysRepository.deleteAll();
         this.categoryRepository.deleteAll();
 
-        Category c1 = new Category(null, "", "carrinhos");
-        Toys t1 = new Toys(null, "carrinho de controle remoto", 2.99, "carrinho de cria", "carrinho pros cria sorri", List.of("1", "2", "3"), c1);
+        Category category1 = new Category(
+                null,
+                "https://example.com/images/action-category.jpg",
+                "Ação"
+        );
 
-        this.categoryRepository.saveAll(List.of(c1));
-        this.toysRepository.saveAll(List.of(t1));
+        Category category2 = new Category(
+                null,
+                "https://example.com/images/educational-category.jpg",
+                "Educativos"
+        );
+
+        Category category3 = new Category(
+                null,
+                "https://example.com/images/electronic-category.jpg",
+                "Eletrônicos"
+        );
+
+        this.categoryRepository.saveAll(Arrays.asList(category1, category2,category3));
+
     }
 }
